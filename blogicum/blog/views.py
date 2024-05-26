@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 
 posts = [
@@ -43,6 +44,11 @@ posts = [
     },
 ]
 
+def get_post_by_id(posd_id):
+    for post in posts:
+        if post['id'] == posd_id:
+            return post
+
 
 def index(request):
     template = 'blog/index.html'
@@ -52,7 +58,10 @@ def index(request):
 
 def post_detail(request, pk):
     template = 'blog/detail.html'
-    context = {'post': posts[pk]}
+    post = get_post_by_id(pk)
+    if post is None:
+        raise Http404('Post not found')
+    context = {'post': post}
     return render(request, template, context)
 
 
