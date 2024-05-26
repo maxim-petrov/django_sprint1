@@ -44,6 +44,7 @@ posts = [
     },
 ]
 
+
 def get_post_by_id(posd_id):
     for post in posts:
         if post['id'] == posd_id:
